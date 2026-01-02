@@ -89,6 +89,9 @@ export interface GameState {
   enemies: Enemy[];
   collectedAllies: number;
   activeCharacterId: string;
-  gameStatus: 'playing' | 'combat' | 'victory' | 'defeat';
+  gameStatus: 'playing' | 'combat' | 'victory' | 'defeat' | 'challenge';
   shortestPaths: ShortestPaths;
+  // Protein Challenge State
+  currentChallengeSymbol?: string;
+  pendingAllyPos?: Position | null;
 }

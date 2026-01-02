@@ -996,7 +996,7 @@ const WormParasiteIcon: React.FC<IconProps> = ({ className, width = "100%", heig
   </svg>
 );
 
-const TapewormIcon: React.FC<IconProps> = ({ className, width = "100%", height = "100%", color = "#F6E05E", stroke = "#D69E2E", isLowHp }) => (
+const TapewormIcon: React.FC<IconProps> = ({ className, width = "100%", height = "100%", color = "#F6E05E", stroke = "#D69E2E" }) => (
   <svg viewBox="0 0 100 100" width={width} height={height} className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id={`tapewormBody-${stroke}`} cx="0.5" cy="0.5" r="0.5" fx="0.3" fy="0.3">
@@ -1032,51 +1032,26 @@ const TapewormIcon: React.FC<IconProps> = ({ className, width = "100%", height =
     <line x1="58" y1="50" x2="65" y2="55" stroke={stroke} strokeWidth="1.5" opacity="0.5" />
     <line x1="73" y1="40" x2="80" y2="45" stroke={stroke} strokeWidth="1.5" opacity="0.5" />
 
-    {isLowHp ? (
-      <>
-        {/* Low HP Eyes (X X) */}
-        <g transform="translate(82, 33)">
-           <path d="M-2 -2 L2 2 M2 -2 L-2 2" stroke="#2D3748" strokeWidth="1.2" strokeLinecap="round" />
-        </g>
-        <g transform="translate(88, 33)">
-           <path d="M-2 -2 L2 2 M2 -2 L-2 2" stroke="#2D3748" strokeWidth="1.2" strokeLinecap="round" />
-        </g>
-        
-        {/* Sweat Drop - Smaller */}
-        <path d="M92 25 Q93 23 94 25 Q95 27 94 28 Q93 29 92 28" fill="#63B3ED" opacity="0.8">
-           <animate attributeName="d" values="M92 25 Q93 23 94 25 Q95 27 94 28 Q93 29 92 28; M92 27 Q93 25 94 27 Q95 29 94 30 Q93 31 92 30" dur="1s" repeatCount="indefinite" />
-           <animate attributeName="opacity" values="0.8;0.4;0.8" dur="1s" repeatCount="indefinite" />
-        </path>
+    {/* 眼睛 */}
+    <g transform="translate(82, 33)">
+        <ellipse cx="0" cy="0" rx="3.5" ry="4.5" fill="white" />
+        <circle cx="0.3" cy="0" r="2" fill="#2D3748" />
+        <circle cx="0.8" cy="-0.7" r="0.8" fill="white" opacity="0.9" />
+    </g>
+    <g transform="translate(88, 33)">
+        <ellipse cx="0" cy="0" rx="3.5" ry="4.5" fill="white" />
+        <circle cx="-0.3" cy="0" r="2" fill="#2D3748" />
+        <circle cx="0.2" cy="-0.7" r="0.8" fill="white" opacity="0.9" />
+    </g>
 
-        {/* Low HP Mouth (Wavy/Trembling) */}
-        <path d="M82 40 Q85 38 88 40" stroke="#2D3748" strokeWidth="1.2" strokeLinecap="round" fill="none">
-             <animate attributeName="d" values="M82 40 Q85 38 88 40; M82 40 Q85 39 88 40; M82 40 Q85 38 88 40" dur="0.2s" repeatCount="indefinite" />
-        </path>
-      </>
-    ) : (
-      <>
-        {/* 眼睛 */}
-        <g transform="translate(82, 33)">
-            <ellipse cx="0" cy="0" rx="3.5" ry="4.5" fill="white" />
-            <circle cx="0.3" cy="0" r="2" fill="#2D3748" />
-            <circle cx="0.8" cy="-0.7" r="0.8" fill="white" opacity="0.9" />
-        </g>
-        <g transform="translate(88, 33)">
-            <ellipse cx="0" cy="0" rx="3.5" ry="4.5" fill="white" />
-            <circle cx="-0.3" cy="0" r="2" fill="#2D3748" />
-            <circle cx="0.2" cy="-0.7" r="0.8" fill="white" opacity="0.9" />
-        </g>
-
-        {/* 嘴巴 */}
-        <path d="M82 38 Q85 41 88 38" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
-            <animate attributeName="d" values="M82 38 Q85 41 88 38; M82 38 Q85 40 88 38; M82 38 Q85 41 88 38" dur="1.5s" repeatCount="indefinite" />
-        </path>
-      </>
-    )}
+    {/* 嘴巴 */}
+    <path d="M82 38 Q85 41 88 38" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
+        <animate attributeName="d" values="M82 38 Q85 41 88 38; M82 38 Q85 40 88 38; M82 38 Q85 41 88 38" dur="1.5s" repeatCount="indefinite" />
+    </path>
   </svg>
 );
 
-const ProtozoaIcon: React.FC<IconProps> = ({ className, width = "100%", height = "100%", color = "#9F7AEA", stroke = "#6B46C1", isLowHp }) => (
+const ProtozoaIcon: React.FC<IconProps> = ({ className, width = "100%", height = "100%", color = "#9F7AEA", stroke = "#6B46C1" }) => (
   <svg viewBox="0 0 100 100" width={width} height={height} className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id={`protozoaBody-${stroke}`} cx="0.5" cy="0.5" r="0.5" fx="0.3" fy="0.3">
@@ -1114,51 +1089,26 @@ const ProtozoaIcon: React.FC<IconProps> = ({ className, width = "100%", height =
         <animate attributeName="cy" values="55;57;55" dur="2.5s" repeatCount="indefinite" />
     </circle>
 
-    {isLowHp ? (
-      <>
-        {/* Low HP Eyes (X X) */}
-        <g transform="translate(42, 48)">
-           <path d="M-2.5 -2.5 L2.5 2.5 M2.5 -2.5 L-2.5 2.5" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" />
-        </g>
-        <g transform="translate(58, 48)">
-           <path d="M-2.5 -2.5 L2.5 2.5 M2.5 -2.5 L-2.5 2.5" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" />
-        </g>
-        
-        {/* Sweat Drop */}
-        <path d="M68 40 Q70 37 72 40 Q74 43 72 45 Q70 47 68 45" fill="#63B3ED" opacity="0.8">
-           <animate attributeName="d" values="M68 40 Q70 37 72 40 Q74 43 72 45 Q70 47 68 45; M68 43 Q70 40 72 43 Q74 46 72 48 Q70 50 68 48" dur="1s" repeatCount="indefinite" />
-           <animate attributeName="opacity" values="0.8;0.4;0.8" dur="1s" repeatCount="indefinite" />
-        </path>
+    {/* 眼睛 */}
+    <g transform="translate(42, 48)">
+        <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
+        <circle cx="0.5" cy="0" r="2" fill="#2D3748" />
+        <circle cx="1.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
+    </g>
+    <g transform="translate(58, 48)">
+        <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
+        <circle cx="-0.5" cy="0" r="2" fill="#2D3748" />
+        <circle cx="0.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
+    </g>
 
-        {/* Low HP Mouth (Wavy/Trembling) */}
-        <path d="M45 62 Q50 58 55 62" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
-             <animate attributeName="d" values="M45 62 Q50 58 55 62; M45 62 Q50 60 55 62; M45 62 Q50 58 55 62" dur="0.2s" repeatCount="indefinite" />
-        </path>
-      </>
-    ) : (
-      <>
-        {/* 眼睛 */}
-        <g transform="translate(42, 48)">
-            <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
-            <circle cx="0.5" cy="0" r="2" fill="#2D3748" />
-            <circle cx="1.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
-        </g>
-        <g transform="translate(58, 48)">
-            <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
-            <circle cx="-0.5" cy="0" r="2" fill="#2D3748" />
-            <circle cx="0.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
-        </g>
-
-        {/* 嘴巴 */}
-        <path d="M45 60 Q50 63 55 60" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
-            <animate attributeName="d" values="M45 60 Q50 63 55 60; M45 60 Q50 61 55 60; M45 60 Q50 63 55 60" dur="2s" repeatCount="indefinite" />
-        </path>
-      </>
-    )}
+    {/* 嘴巴 */}
+    <path d="M45 60 Q50 63 55 60" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
+        <animate attributeName="d" values="M45 60 Q50 63 55 60; M45 60 Q50 61 55 60; M45 60 Q50 63 55 60" dur="2s" repeatCount="indefinite" />
+    </path>
   </svg>
 );
 
-const FungusIcon: React.FC<IconProps> = ({ className, width = "100%", height = "100%", color = "#EDF2F7", stroke = "#CBD5E0", isLowHp }) => (
+const FungusIcon: React.FC<IconProps> = ({ className, width = "100%", height = "100%", color = "#EDF2F7", stroke = "#CBD5E0" }) => (
   <svg viewBox="0 0 100 100" width={width} height={height} className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id={`fungusBody-${stroke}`} cx="0.5" cy="0.5" r="0.5" fx="0.3" fy="0.3">
@@ -1193,47 +1143,22 @@ const FungusIcon: React.FC<IconProps> = ({ className, width = "100%", height = "
         <animate attributeName="cy" values="15;13;15" dur="2s" repeatCount="indefinite" />
     </circle>
 
-    {isLowHp ? (
-      <>
-        {/* Low HP Eyes (X X) */}
-        <g transform="translate(35, 58)">
-           <path d="M-2.5 -2.5 L2.5 2.5 M2.5 -2.5 L-2.5 2.5" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" />
-        </g>
-        <g transform="translate(45, 58)">
-           <path d="M-2.5 -2.5 L2.5 2.5 M2.5 -2.5 L-2.5 2.5" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" />
-        </g>
-        
-        {/* Sweat Drop */}
-        <path d="M50 50 Q52 47 54 50 Q56 53 54 55 Q52 57 50 55" fill="#63B3ED" opacity="0.8">
-           <animate attributeName="d" values="M50 50 Q52 47 54 50 Q56 53 54 55 Q52 57 50 55; M50 53 Q52 50 54 53 Q56 56 54 58 Q52 60 50 58" dur="1s" repeatCount="indefinite" />
-           <animate attributeName="opacity" values="0.8;0.4;0.8" dur="1s" repeatCount="indefinite" />
-        </path>
+    {/* 眼睛 */}
+    <g transform="translate(35, 58)">
+        <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
+        <circle cx="0.5" cy="0" r="2" fill="#2D3748" />
+        <circle cx="1.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
+    </g>
+    <g transform="translate(45, 58)">
+        <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
+        <circle cx="-0.5" cy="0" r="2" fill="#2D3748" />
+        <circle cx="0.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
+    </g>
 
-        {/* Low HP Mouth (Wavy/Trembling) */}
-        <path d="M38 70 Q40 66 42 70" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
-             <animate attributeName="d" values="M38 70 Q40 66 42 70; M38 70 Q40 68 42 70; M38 70 Q40 66 42 70" dur="0.2s" repeatCount="indefinite" />
-        </path>
-      </>
-    ) : (
-      <>
-        {/* 眼睛 */}
-        <g transform="translate(35, 58)">
-            <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
-            <circle cx="0.5" cy="0" r="2" fill="#2D3748" />
-            <circle cx="1.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
-        </g>
-        <g transform="translate(45, 58)">
-            <ellipse cx="0" cy="0" rx="4" ry="5" fill="white" />
-            <circle cx="-0.5" cy="0" r="2" fill="#2D3748" />
-            <circle cx="0.2" cy="-0.8" r="1" fill="white" opacity="0.9" />
-        </g>
-
-        {/* 嘴巴 */}
-        <path d="M38 68 Q40 71 42 68" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
-            <animate attributeName="d" values="M38 68 Q40 71 42 68; M38 68 Q40 69 42 68; M38 68 Q40 71 42 68" dur="2s" repeatCount="indefinite" />
-        </path>
-      </>
-    )}
+    {/* 嘴巴 */}
+    <path d="M38 68 Q40 71 42 68" stroke="#2D3748" strokeWidth="1.5" strokeLinecap="round" fill="none">
+        <animate attributeName="d" values="M38 68 Q40 71 42 68; M38 68 Q40 69 42 68; M38 68 Q40 71 42 68" dur="2s" repeatCount="indefinite" />
+    </path>
   </svg>
 );
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 import { Maze } from '../components/Maze';
 import { CombatSystem } from '../components/CombatSystem';
+import { ProteinChallenge } from '../components/ProteinChallenge';
 import { useNavigate } from 'react-router-dom';
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Heart, Maximize, Minimize } from 'lucide-react';
 import { LEVELS } from '../utils/constants';
@@ -205,6 +206,9 @@ export const GamePage: React.FC = () => {
 
       {/* Combat Overlay */}
       <CombatSystem />
+
+      {/* Protein Challenge Overlay */}
+      <ProteinChallenge />
     </div>
   );
 };

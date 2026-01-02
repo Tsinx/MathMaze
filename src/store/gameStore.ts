@@ -7,6 +7,7 @@ import { generateMathQuestion } from '../utils/mathGenerator';
 import { IMMUNE_CELLS, PATHOGENS, PROBIOTICS } from '../utils/constants';
 import { soundManager } from '../utils/SoundManager';
 import { audioManager } from '../utils/AudioManager';
+import { getRandomTemplate } from '../data/strokeTemplates';
 
 interface GameStore {
   gameState: GameState;
@@ -29,6 +30,7 @@ interface GameStore {
   revivePlayer: () => void;
   setDiceSides: (sides: number) => void;
   setActiveCharacter: (id: string) => void;
+  completeAllyCollection: (success: boolean) => void;
 }
 
 const INITIAL_GAME_STATE: GameState = {
@@ -42,7 +44,9 @@ const INITIAL_GAME_STATE: GameState = {
   collectedAllies: 0,
   activeCharacterId: '',
   gameStatus: 'playing',
-  shortestPaths: {}
+  shortestPaths: {},
+  currentChallengeSymbol: undefined,
+  pendingAllyPos: null
 };
 
 export const useGameStore = create<GameStore>()(
@@ -280,28 +284,20 @@ export const useGameStore = create<GameStore>()(
         }
 
         // Check Ally
-        const newTeam = [...gameState.playerTeam];
-        let collectedAllies = gameState.collectedAllies;
-        const newMaze = [...gameState.maze.map(row => [...row])]; // Deep copy for immutability
-
         if (cell.hasAlly) {
-          soundManager.playCollect();
+          soundManager.playMove();
+          const template = getRandomTemplate();
           
-          // Add the ally that was pre-assigned to this cell
-          const allAllies = [...IMMUNE_CELLS, ...PROBIOTICS];
-          const allyType = cell.allyType || allAllies[0].type;
-          const probioticType = cell.probioticType;
-          
-          // Play audio in background (sequentially) without blocking movement
-          audioManager.playEvent('collect_ally').then(() => {
-             audioManager.playAllyIntro(allyType, probioticType);
-          });
-
-          const allyData = allAllies.find(a => a.type === allyType && a.probioticType === probioticType) || allAllies[0];
-          const newAlly = { ...allyData, id: `ally_${Date.now()}` };
-          newTeam.push(newAlly);
-          collectedAllies++;
-          newMaze[newY][newX].hasAlly = false;
+          set((state) => ({
+            gameState: {
+              ...state.gameState,
+              playerPosition: { x: newX, y: newY },
+              gameStatus: 'challenge',
+              currentChallengeSymbol: template.name,
+              pendingAllyPos: { x: newX, y: newY }
+            }
+          }));
+          return;
         }
 
         // Check Exit
@@ -317,6 +313,10 @@ export const useGameStore = create<GameStore>()(
           }));
           return;
         }
+
+        const newTeam = [...gameState.playerTeam];
+        const collectedAllies = gameState.collectedAllies;
+        const newMaze = [...gameState.maze.map(row => [...row])];
 
         soundManager.playMove();
         set((state) => ({
@@ -898,6 +898,65 @@ export const useGameStore = create<GameStore>()(
         set((state) => ({
             gameState: { ...state.gameState, activeCharacterId: id }
         }));
+      },
+
+      completeAllyCollection: (success: boolean) => {
+        const { gameState } = get();
+        // If no pending ally, just return to playing
+        if (!gameState.pendingAllyPos) {
+             set(state => ({ gameState: { ...state.gameState, gameStatus: 'playing' } }));
+             return;
+        }
+
+        if (success) {
+           const { x, y } = gameState.pendingAllyPos;
+           const cell = gameState.maze[y][x];
+           
+           if (cell.hasAlly) {
+               soundManager.playCollect();
+               
+               const newTeam = [...gameState.playerTeam];
+               const newMaze = [...gameState.maze.map(row => row.map(c => ({...c})))]; // Deep copy
+               
+               const allAllies = [...IMMUNE_CELLS, ...PROBIOTICS];
+               const allyType = cell.allyType || allAllies[0].type;
+               const probioticType = cell.probioticType;
+
+               audioManager.playEvent('collect_ally').then(() => {
+                   audioManager.playAllyIntro(allyType, probioticType);
+               });
+
+               const allyData = allAllies.find(a => a.type === allyType && a.probioticType === probioticType) || allAllies[0];
+               const newAlly = { ...allyData, id: `ally_${Date.now()}` };
+               newTeam.push(newAlly);
+               
+               newMaze[y][x].hasAlly = false;
+               
+               set(state => ({
+                   gameState: {
+                       ...state.gameState,
+                       playerTeam: newTeam,
+                       collectedAllies: state.gameState.collectedAllies + 1,
+                       maze: newMaze,
+                       gameStatus: 'playing',
+                       pendingAllyPos: null,
+                       currentChallengeSymbol: undefined
+                   }
+               }));
+           } else {
+               set(state => ({ gameState: { ...state.gameState, gameStatus: 'playing', pendingAllyPos: null } }));
+           }
+        } else {
+            // Failed or cancelled
+            set(state => ({
+                gameState: {
+                    ...state.gameState,
+                    gameStatus: 'playing',
+                    pendingAllyPos: null,
+                    currentChallengeSymbol: undefined
+                }
+            }));
+        }
       }
     }),
     { name: 'immune-hero-storage' }

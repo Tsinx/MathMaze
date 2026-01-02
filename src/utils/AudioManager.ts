@@ -21,7 +21,13 @@ type AudioEvent =
   | 'game_defeat'
   | 'boss_encounter'
   | 'boss_defeated'
-  | 'ally_intro';
+  | 'ally_intro'
+  | 'writing_challenge_start'
+  | 'writing_three_stars'
+  | 'writing_two_stars'
+  | 'writing_one_star'
+  | 'writing_failed'
+  | 'writing_ally_collected';
 
 class AudioManager {
   private audioCache: Map<string, HTMLAudioElement> = new Map();
@@ -137,6 +143,42 @@ class AudioManager {
     return this.playAudio(path);
   }
 
+  async playWritingLetter(symbol: string): Promise<void> {
+    const char = symbol.toUpperCase();
+    let filename: string;
+
+    if (char >= 'A' && char <= 'Z') {
+      if (symbol === char) {
+        filename = `uppercase_${char}.wav`;
+      } else {
+        filename = `lowercase_${char.toLowerCase()}.wav`;
+      }
+    } else if (char >= '0' && char <= '9') {
+      filename = `number_${char}.wav`;
+    } else {
+      return;
+    }
+
+    const path = `/audio/writing/${filename}`;
+    return this.playAudio(path);
+  }
+
+  async playWritingFeedback(stars: number): Promise<void> {
+    let event: AudioEvent;
+
+    if (stars === 3) {
+      event = 'writing_three_stars';
+    } else if (stars === 2) {
+      event = 'writing_two_stars';
+    } else if (stars === 1) {
+      event = 'writing_one_star';
+    } else {
+      event = 'writing_failed';
+    }
+
+    return this.playEvent(event);
+  }
+
   private getEventPath(event: AudioEvent, level?: number): string {
     switch (event) {
       case 'correct':
@@ -179,6 +221,18 @@ class AudioManager {
         return '/audio/game/boss_encounter.wav';
       case 'boss_defeated':
         return '/audio/game/boss_defeated.wav';
+      case 'writing_challenge_start':
+        return '/audio/writing/challenge_start.wav';
+      case 'writing_three_stars':
+        return '/audio/writing/three_stars.wav';
+      case 'writing_two_stars':
+        return '/audio/writing/two_stars.wav';
+      case 'writing_one_star':
+        return '/audio/writing/one_star.wav';
+      case 'writing_failed':
+        return '/audio/writing/failed.wav';
+      case 'writing_ally_collected':
+        return '/audio/writing/ally_collected.wav';
       default:
         return '';
     }

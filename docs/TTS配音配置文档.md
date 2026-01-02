@@ -229,7 +229,73 @@
 
 ---
 
-## 五、音色详细说明
+## 五、写字挑战配音
+
+### 音色配置
+
+所有写字挑战均使用统一音色: **Cherry** (阳光积极、亲切自然小姐姐)
+
+### 题目类型
+
+#### 大写字母 (26个)
+
+| 文件名 | 语音内容 | 使用音色 |
+|-------|---------|---------|
+| uppercase_A.wav | 请核对表面蛋白，写出大写字母A | Cherry |
+| uppercase_B.wav | 请核对表面蛋白，写出大写字母B | Cherry |
+| uppercase_C.wav | 请核对表面蛋白，写出大写字母C | Cherry |
+| ... | ... | ... |
+| uppercase_Z.wav | 请核对表面蛋白，写出大写字母Z | Cherry |
+
+#### 小写字母 (26个)
+
+| 文件名 | 语音内容 | 使用音色 |
+|-------|---------|---------|
+| lowercase_a.wav | 请核对表面蛋白，写出小写字母a | Cherry |
+| lowercase_b.wav | 请核对表面蛋白，写出小写字母b | Cherry |
+| lowercase_c.wav | 请核对表面蛋白，写出小写字母c | Cherry |
+| ... | ... | ... |
+| lowercase_z.wav | 请核对表面蛋白，写出小写字母z | Cherry |
+
+#### 数字 (10个)
+
+| 文件名 | 语音内容 | 使用音色 |
+|-------|---------|---------|
+| number_0.wav | 请核对表面蛋白，写出数字0 | Cherry |
+| number_1.wav | 请核对表面蛋白，写出数字1 | Cherry |
+| number_2.wav | 请核对表面蛋白，写出数字2 | Cherry |
+| ... | ... | ... |
+| number_9.wav | 请核对表面蛋白，写出数字9 | Cherry |
+
+### 反馈音频 (6个)
+
+| 文件名 | 语音内容 | 使用音色 |
+|-------|---------|---------|
+| challenge_start.wav | 要获得新队友，需要通过蛋白质识别挑战！准备好画板！ | Cherry |
+| three_stars.wav | 太棒了！写得完美！你成功识别了蛋白质！ | Cherry |
+| two_stars.wav | 很好！写得不错，你识别了蛋白质！ | Cherry |
+| one_star.wav | 继续加油！你已经识别了蛋白质！ | Cherry |
+| failed.wav | 没关系，再试一次！仔细看模板，你能做到的！ | Cherry |
+| ally_collected.wav | 恭喜你！成功收集到新队友！ | Cherry |
+
+### 音频目录
+
+- 写字题目音频: `public/audio/writing/`
+- 文件命名规则:
+  - 大写字母: `uppercase_{字母}.wav`
+  - 小写字母: `lowercase_{字母}.wav`
+  - 数字: `number_{数字}.wav`
+  - 反馈音频: `{事件名}.wav`
+
+### TTS生成脚本
+
+| 脚本名称 | 功能 | 文件位置 |
+|---------|------|---------|
+| generate_writing_tts.py | 生成写字挑战音频 | scripts/generate_writing_tts.py |
+
+---
+
+## 六、音色详细说明
 
 ### 常用音色特点
 
@@ -291,6 +357,7 @@
 | generate_allies_tts.py | 生成盟友介绍音频 | scripts/generate_allies_tts.py |
 | generate_event_tts.py | 生成游戏事件音频 | scripts/generate_event_tts.py |
 | generate_math_tts.py | 生成数学题目音频 | scripts/generate_math_tts.py |
+| generate_writing_tts.py | 生成写字挑战音频 | scripts/generate_writing_tts.py |
 | generate_single_tts.py | 生成单个音频文件 | scripts/generate_single_tts.py |
 | fix_hit_enemy_tts.py | 修复特定音频文件 | scripts/fix_hit_enemy_tts.py |
 | test_tts.py | 测试TTS功能 | scripts/test_tts.py |
@@ -315,11 +382,16 @@ public/audio/
 │   ├── game_start.wav
 │   ├── level_start_1.wav
 │   └── ...
-└── math/               # 数学题目音频
-    ├── question/       # 出题音频
-    │   └── question_X_Y.wav
-    └── answer/         # 答案音频
-        └── answer_X_Y_Z.wav
+├── math/               # 数学题目音频
+│   ├── question/       # 出题音频
+│   │   └── question_X_Y.wav
+│   └── answer/         # 答案音频
+│       └── answer_X_Y_Z.wav
+└── writing/            # 写字挑战音频
+    ├── uppercase_A.wav # 大写字母题目
+    ├── lowercase_a.wav # 小写字母题目
+    ├── number_0.wav   # 数字题目
+    └── *.wav         # 反馈音频
 ```
 
 ---
